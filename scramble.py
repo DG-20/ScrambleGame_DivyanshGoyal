@@ -5,104 +5,186 @@ import time
 import random
 import colorama
 from colorama import Fore, Back, Style
+
 colorama.init()
 
 start = time.time()
 # Intro.
-print("This is a game where you have 5 scrambled words which you need to unscramble, in the end, you will receive a score out of 5. \n . \n . \n .")
+print(
+    f"""{Fore.YELLOW}
+This is a game where you have 5 scrambled words which you need to unscramble.
+In the end, you will receive a score out of 15.
+If you get it right in the first attempt, you will get 3 points, then 2, then 1, then 0. {Style.RESET_ALL}
+"""
+)
 
 score = 0
 input1 = ""
-measure = True
 
-# Word Banks for each level.
-six_letter_word_bank = ["invest", "debate", "family", "global",
-                        "leader", "normal", "obtain", "nearly", "played", "school"]
-first = six_letter_word_bank[random.randint(0, 9)]
+# Word bank class for each level.
+class wordBank:
+    six_letters = [
+        "invest",
+        "debate",
+        "family",
+        "global",
+        "leader",
+        "normal",
+        "obtain",
+        "nearly",
+        "played",
+        "school",
+    ]
 
-seven_letter_word_bank = ["ability", "courage", "awesome",
-                          "element", "learned", "mission", "prepare", "section", "working", "booking"]
-second = seven_letter_word_bank[random.randint(0, 9)]
+    seven_letters = [
+        "ability",
+        "courage",
+        "awesome",
+        "element",
+        "learned",
+        "mission",
+        "prepare",
+        "section",
+        "working",
+        "booking",
+    ]
 
-eight_letter_word_bank = ["achieved", "champion", "hardware", "purposes",
-                          "websites", "advisory", "explorer", "premises", "workflow", "airports"]
-third = eight_letter_word_bank[random.randint(0, 9)]
+    eight_letters = [
+        "achieved",
+        "champion",
+        "hardware",
+        "purposes",
+        "websites",
+        "advisory",
+        "explorer",
+        "premises",
+        "workflow",
+        "airports",
+    ]
 
-nine_letter_word_bank = ["batteries", "different", "liability", "addiction",
-                         "instances", "residence", "bandwidth", "directing", "ignorance", "ministers"]
-fourth = nine_letter_word_bank[random.randint(0, 9)]
+    nine_letters = [
+        "batteries",
+        "different",
+        "liability",
+        "addiction",
+        "instances",
+        "residence",
+        "bandwidth",
+        "directing",
+        "ignorance",
+        "ministers",
+    ]
 
-ten_letter_word_bank = ["functional", "connection", "accounting", "physicians",
-                        "brightness", "disconnect", "renovation", "cafeterias", "delicacies", "vegetarian"]
-fifth = ten_letter_word_bank[random.randint(0, 9)]
+    ten_letters = [
+        "functional",
+        "connection",
+        "accounting",
+        "physicians",
+        "brightness",
+        "disconnect",
+        "renovation",
+        "cafeterias",
+        "delicacies",
+        "vegetarian",
+    ]
 
 
-# Checks whether input in correct or incorrect and displays message accordingly.
-def scramble(a):
+def scramble(user_input):
+    """Checks whether input in correct or incorrect and displays message accordingly."""
+
     input1 = input("Enter Answer: ")
-    count = 0
-    while input1.lower() != a.lower():
+    input1 = input1.lower()
+    user_input = user_input.lower()
+    count = 1
+    global score
+    while input1 != user_input:
         input1 = input("Try Again: ")
         count += 1
-        if count > 1 and input1.lower() != a.lower():
+        if count > 2 and input1 != user_input:
             count = 0
-            return Fore.RED + "Incorrect! \nCorrect Answer is: " + a + " \n . \n . \n . " + Style.RESET_ALL
-    if input1.lower() == a.lower():
-        global score
-        score += 1
-        return Fore.GREEN + "Well Done! Next Level \n . \n . \n ." + Style.RESET_ALL
+            return f"""{Fore.RED}Incorrect!
+Correct Answer is: {user_input}
+.
+.
+.              
+            {Style.RESET_ALL}"""
+    if input1 == user_input:
+        if count == 1:
+            score += 3
+        elif count == 2:
+            score += 2
+        else:
+            score += 1
+        return f"""{Fore.GREEN}Well Done! Next Level! 
+.       
+.
+.
+        {Style.RESET_ALL}"""
 
 
-# Takes the word and scrambles it a unique way each time the game is played.
-def scrambler(a):
+def scrambler(user_input):
+    """Takes the word and scrambles it a unique way each time the game is played."""
+
     l = []
-    length = len(a)
+    length = len(user_input)
     randomnum = random.sample(range(length), length)
     for i in range(length):
-        l.append(a[randomnum[i]].lower())
+        l.append(user_input[randomnum[i]].lower())
     print(l)
 
 
+# Object for the wordBank class
+word = wordBank()
+
+# Generates a random integer
+random_word = random.randint(0, 9)
+
 # Level One
-print("This is Level One: ")
-scrambler(first)
-print(scramble(first))
+print(Fore.WHITE + "This is Level One: ")
+scrambler(word.six_letters[random_word])
+print(scramble(word.six_letters[random_word]))
 
 # Level Two
 print("This is Level Two")
-scrambler(second)
-print(scramble(second))
+scrambler(word.seven_letters[random_word])
+print(scramble(word.seven_letters[random_word]))
 
 # Level Three
 print("This is Level Three")
-scrambler(third)
-print(scramble(third))
+scrambler(word.eight_letters[random_word])
+print(scramble(word.eight_letters[random_word]))
 
 # Level Four
 print("This is Level Four")
-scrambler(fourth)
-print(scramble(fourth))
+scrambler(word.nine_letters[random_word])
+print(scramble(word.nine_letters[random_word]))
 
 # Level Five
 print("This is Level Five")
-scrambler(fifth)
-print(scramble(fifth))
+scrambler(word.ten_letters[random_word])
+print(scramble(word.ten_letters[random_word]))
 
 # Conclusion Screen
 print("\n . \n . \n .")
-if score >= 2:
-    print(Back.BLACK + Fore.GREEN + "The game has concluded, your score is:" +
-          " " + str(score) + "/5!" + Style.RESET_ALL)
+if score >= 7:
+    print(
+        Back.BLACK
+        + Fore.GREEN
+        + f"The game has concluded, your score is: {str(score)}/15! {Style.RESET_ALL}"
+    )
 else:
-    print(Back.BLACK + Fore.RED + "The game has concluded, your score is:" +
-          " " + str(score) + "/5!" + Style.RESET_ALL)
+    print(
+        Back.BLACK
+        + Fore.RED
+        + f"The game has concluded, your score is: {str(score)}/15! {Style.RESET_ALL}"
+    )
 
-time = (time.time() - start)
+time = time.time() - start
 seconds = math.modf(time)
 
 if time <= 60.00:
-    print("You played this game for about",
-          round(time, 2), "seconds")
+    print(f"You played this game for about {round(time, 2)} seconds")
 else:
     print(
-        f"You played this game for about {int(time/60)}: {int((seconds[0]*60))} minutes")
+        f"You played this game for about {int(time/60)} mins:{int((seconds[0]*60))} seconds"
+    )
