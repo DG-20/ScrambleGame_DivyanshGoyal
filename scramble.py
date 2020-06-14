@@ -11,18 +11,19 @@ colorama.init()
 start = time.time()
 # Intro.
 print(
-    f"""{Fore.YELLOW}
-This is a game where you have 5 scrambled words which you need to unscramble.
-In the end, you will receive a score out of 15.
-If you get it right in the first attempt, you will get 3 points, then 2, then 1, then 0. {Style.RESET_ALL}
-"""
+    f"{Fore.YELLOW}\
+This is a game where you have 5 scrambled words which you need to unscramble.\n\
+In the end, you will receive a score out of 15.\n\
+If you get it right in the first attempt, you will get 3 points, then 2, then 1, then 0. {Style.RESET_ALL}\n\
+"
 )
 
 score = 0
 input1 = ""
 
 # Word bank class for each level.
-class wordBank:
+class WordBank:
+
     six_letters = [
         "invest",
         "debate",
@@ -98,16 +99,18 @@ def scramble(user_input):
     count = 1
     global score
     while input1 != user_input:
-        input1 = input("Try Again: ")
+        input1 = input(
+            f"{Fore.RED}Incorrect! You have {3-count} attempt(s) left.{Style.RESET_ALL}\nTry again: "
+        )
         count += 1
         if count > 2 and input1 != user_input:
             count = 0
-            return f"""{Fore.RED}Incorrect!
-Correct Answer is: {user_input}
-.
-.
-.              
-            {Style.RESET_ALL}"""
+            return f"{Fore.RED}Incorrect!{Style.RESET_ALL}\n\
+Correct Answer is: {user_input}\n\
+.\n\
+.\n\
+.\n\
+{Style.RESET_ALL}"
     if input1 == user_input:
         if count == 1:
             score += 3
@@ -115,11 +118,11 @@ Correct Answer is: {user_input}
             score += 2
         else:
             score += 1
-        return f"""{Fore.GREEN}Well Done! Next Level! 
-.       
-.
-.
-        {Style.RESET_ALL}"""
+        return f"{Fore.GREEN}Well Done! Next Level!\n\
+.\n\
+.\n\
+.\n\
+{Style.RESET_ALL}"
 
 
 def scrambler(user_input):
@@ -133,14 +136,14 @@ def scrambler(user_input):
     print(l)
 
 
-# Object for the wordBank class
-word = wordBank()
+# Object for the WordBank class
+word = WordBank()
 
 # Generates a random integer
 random_word = random.randint(0, 9)
 
 # Level One
-print(Fore.WHITE + "This is Level One: ")
+print(Fore.WHITE + "This is Level One")
 scrambler(word.six_letters[random_word])
 print(scramble(word.six_letters[random_word]))
 
