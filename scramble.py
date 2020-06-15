@@ -99,14 +99,15 @@ def scramble(user_input):
     count = 1
     global score
     while input1 != user_input:
-        input1 = input(
-            f"{Fore.RED}Incorrect! You have {3-count} attempt(s) left.{Style.RESET_ALL}\nTry again: "
-        )
         count += 1
+        print(
+            f"{Fore.RED}Incorrect! You have {4-count} attempt(s) left.{Style.RESET_ALL}"
+        )
+        input1 = input("Try again: ")
         if count > 2 and input1 != user_input:
             count = 0
             return f"{Fore.RED}Incorrect!{Style.RESET_ALL}\n\
-Correct Answer is: {user_input}\n\
+{Fore.YELLOW}Correct Answer is: {user_input}\n{Style.RESET_ALL}\
 .\n\
 .\n\
 .\n\
