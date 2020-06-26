@@ -169,7 +169,6 @@ scrambler(word.ten_letters[random_word])
 print(scramble(word.ten_letters[random_word]))
 
 # Conclusion Screen
-print("\n . \n . \n .")
 if score >= 7:
     print(
         Back.BLACK
