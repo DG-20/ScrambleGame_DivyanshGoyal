@@ -1,3 +1,3 @@
-This is my first python project.
-A scramble game I made which can be played on the command prompt. 
-To play, simply git pull and run in cmd.
+This is my first Python project.
+A scramble game I made which can be played on the Command Prompt. 
+To play, simply git pull and run in cmd after installing the library mentioned in the requirements.txt file.
